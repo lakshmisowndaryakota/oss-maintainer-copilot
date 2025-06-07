@@ -1,0 +1,15 @@
+name: "GitHub GraphQL Query"
+description: "Run a GraphQL query against the GitHub API"
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+  query:
+    description: "GraphQL query to run"
+    required: true
+outputs:
+  result:
+    description: "The JSON result from the query"
+runs:
+  using: "node16"
+  main: "index.js"

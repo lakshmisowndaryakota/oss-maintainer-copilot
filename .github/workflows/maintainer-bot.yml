@@ -11,14 +11,24 @@ jobs:
   reply_to_issue:
     runs-on: ubuntu-latest
     steps:
-      - name: Auto-comment on new issue
-        uses: actions/github-script@v6
+      - uses: actions/checkout@v4
+
+      - name: Run GraphQL Query
+        uses: ./.github/actions/graphql-query
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            await github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: "Thanks for opening this issue! The maintainers will take a look soon. 🙌"
-            })
+          token: ${{ secrets.GITHUB_TOKEN }}
+          query: |
+            {
+              repository(owner: "${{ github.repository_owner }}", name: "${{ github.event.repository.name }}") {
+                issues(last: 5) {
+                  nodes {
+                    title
+                    url
+                    createdAt
+                  }
+                }
+              }
+            }
+
+      - name: Output query result
+        run: echo "${{ steps.graphql-query.outputs.result }}"
