@@ -3,6 +3,8 @@
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
-      "@octokit/graphql": "^7.0.2"
+      "@actions/core": "^1.10.0",
+      "@octokit/graphql": "^8.0.0"
     }
   }
+  
