@@ -5,6 +5,7 @@ on:
     types: [opened]
 
 permissions:
+  contents: read
   issues: write
 
 jobs:
@@ -21,6 +22,12 @@ jobs:
       - name: Install dependencies for custom action
         run: npm install
         working-directory: .github/actions/graphql-query
+
+      - name: Show repository owner with github-script
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log("Repository owner:", process.env.GITHUB_REPOSITORY_OWNER || github.context.repo.owner);
 
       - name: Run GraphQL Query
         uses: ./.github/actions/graphql-query

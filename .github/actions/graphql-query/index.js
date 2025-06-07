@@ -1,22 +1,24 @@
 const core = require('@actions/core');
 const { graphql } = require('@octokit/graphql');
 
-async function run() {
+(async () => {
   try {
     const token = core.getInput('token');
     const query = core.getInput('query');
 
-    const graphqlWithAuth = graphql.defaults({
+    if (!query) {
+        throw new Error('No GraphQL query provided as input.');
+    } 
+
+    const response = await graphql(query, {
       headers: {
         authorization: `token ${token}`,
       },
     });
 
-    const data = await graphqlWithAuth(query);
-    core.setOutput('result', JSON.stringify(data, null, 2));
+    console.log('GraphQL response:', JSON.stringify(response, null, 2));
   } catch (error) {
+    console.error('GraphQL query failed:', error);
     core.setFailed(error.message);
   }
-}
-
-run();
+})();
