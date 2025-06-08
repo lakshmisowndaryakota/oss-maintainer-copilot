@@ -4,7 +4,15 @@
     "main": "index.js",
     "dependencies": {
       "@actions/core": "^1.10.0",
-      "@octokit/graphql": "^8.0.0"
+      "@octokit/graphql": "^8.0.0",
+      "next": "^14.0.0",
+      "react": "^18.0.0",
+      "react-dom": "^18.0.0"
+    },
+    "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
     }
   }
   
