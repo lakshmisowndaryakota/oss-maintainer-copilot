@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { fetchRepoOverview } from '../github-api';
+import { Star, GitBranch, Eye, Code, Clock } from "lucide-react";
 
 export default function Home() {
   const [repo, setRepo] = useState<any>(null);
@@ -14,38 +15,63 @@ export default function Home() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>{repo.name}</h1>
-      <p>{repo.description}</p>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">⭐ Stars</h2>
-          <p className="text-lg">{repo.stargazerCount}</p>
-        </div>
+<div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white p-6 rounded-xl shadow mb-6">
+  <h1 className="text-2xl font-bold text-gray-900">{repo.name}</h1>
+  <p className="text-gray-600 text-sm md:text-base md:ml-6 mt-2 md:mt-0">{repo.description}</p>
+</div>
+
+<div className="bg-white shadow-xl rounded-2xl p-6">
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {/* Stars */}
+    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+      <Star className="w-6 h-6 text-yellow-500" />
+      <div>
+        <p className="text-sm text-gray-500">Stars</p>
+        <p className="text-xl font-semibold">{repo.stargazerCount}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">🍴 Forks</h2>
-          <p className="text-lg">{repo.forkCount}</p>
-        </div>
+    </div>
+
+    {/* Forks */}
+    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+      <GitBranch className="w-6 h-6 text-blue-500" />
+      <div>
+        <p className="text-sm text-gray-500">Forks</p>
+        <p className="text-xl font-semibold">{repo.forkCount}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">👀 Watchers</h2>
-          <p className="text-lg">{repo.watchers.totalCount}</p>
-        </div>
+    </div>
+
+    {/* Watchers */}
+    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+      <Eye className="w-6 h-6 text-green-500" />
+      <div>
+        <p className="text-sm text-gray-500">Watchers</p>
+        <p className="text-xl font-semibold">{repo.watchers.totalCount}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">🛠️ Language</h2>
-          <p className="text-lg">{repo.primaryLanguage?.name}</p>
-        </div>
+    </div>
+
+    {/* Language */}
+    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+      <Code className="w-6 h-6 text-purple-500" />
+      <div>
+        <p className="text-sm text-gray-500">Language</p>
+        <p className="text-xl font-semibold">{repo.primaryLanguage?.name || "N/A"}</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">🕒 Last commit</h2>
-          <p className="text-lg">{new Date(repo.defaultBranchRef.target.committedDate).toLocaleDateString()}</p>
-        </div>
+    </div>
+
+    {/* Last Commit */}
+    <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+      <Clock className="w-6 h-6 text-gray-500" />
+      <div>
+        <p className="text-sm text-gray-500">Last Commit</p>
+        <p className="text-xl font-semibold">
+          {new Date(repo.defaultBranchRef.target.committedDate).toLocaleDateString()}
+        </p>
       </div>
+    </div>
+  </div>
+</div>
+
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
         <div className="bg-white shadow rounded-xl p-4">
           <h2 className="font-bold">Open Issues</h2>
