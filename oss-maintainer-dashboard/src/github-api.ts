@@ -50,7 +50,7 @@ export async function fetchRepoOverview(owner: string, repo: string) {
         goodFirstIssues: issues(labels: ["good first issue"], states: OPEN) {
           totalCount
         }
-        labels(first: 10) {
+        labels(first: 100) {
           nodes {
             name
             issues(states: OPEN) {
@@ -183,6 +183,11 @@ export async function fetchRepoOverview(owner: string, repo: string) {
     }
   }
 
+  const labelData = json.data.repository.labels?.nodes?.map((label: any) => ({
+    name: label.name,
+    count: label.issues.totalCount,
+  }));
+
   const repoData = {
     ...json.data.repository,
     openPRs,
@@ -191,7 +196,8 @@ export async function fetchRepoOverview(owner: string, repo: string) {
     mergedLast30Days,
     averageMergeTimeInDays,
     topContributors,
-    staleIssuesMoreThan30
+    staleIssuesMoreThan30,
+    labelData
   };
 
   console.log(repoData);

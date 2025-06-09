@@ -24,7 +24,7 @@ A beautiful and insightful dashboard for open-source maintainers to easily track
    ```bash
    git clone https://github.com/lakshmisowndaryakota/oss-maintainer-copilot.git
 
-2. Install Depedencies
+2. Install Dependencies
     npm install
 
 3. Add your .env.local file with your GitHub token:
@@ -35,11 +35,14 @@ A beautiful and insightful dashboard for open-source maintainers to easily track
 4. Run the app
     npm run dev
 
-🧱 Tech Stack
-    🧬 React + TypeScript
-    💨 TailwindCSS
-    🧠 GitHub GraphQL API
-    📦 Vite / Next.js (based on your setup)
+---
 
-🤝 Contributing
+## 🧱 Tech Stack
+
+- 🧬 React + TypeScript
+- 💨 TailwindCSS
+- 🧠 GitHub GraphQL API
+- 📦 Vite / Next.js (based on your setup)
+
+### 🤝 Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you’d like to change.
