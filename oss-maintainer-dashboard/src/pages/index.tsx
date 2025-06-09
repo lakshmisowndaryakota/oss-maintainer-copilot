@@ -73,7 +73,9 @@ export default function Home() {
       </div>
     </div>
 
-    <div className="p-6">
+    <div className="p-6"></div>
+
+    <div className="bg-white shadow-xl rounded-2xl p-6">
       <h2 className="text-2xl font-bold mb-4">📂 Issues Summary</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <StatCard title="🟢 Open Issues" value={repo.openIssues.totalCount} />
@@ -95,11 +97,13 @@ export default function Home() {
           ))}
         </ul>
       </div>
+    
+
+      <LabelChart data={repo.labelData} />
     </div>
 
-    <LabelChart data={repo.labelData} />
-
-
+    <div className="p-6"></div>
+    
       <div className="bg-white shadow rounded-xl p-4">
         <h2 className="font-bold">pull requests {repo.pullRequests?.totalCount}</h2>
         <ul className="text-sm list-disc pl-4">
