@@ -1,0 +1,18 @@
+- name: Query GitHub GraphQL API
+  uses: ./.github/actions/graphql-query
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  with:
+    query: |
+      query($owner: String!, $repo: String!) {
+        repository(owner: $owner, name: $repo) {
+          issues(last: 5, states: OPEN) {
+            nodes {
+              title
+              url
+              createdAt
+            }
+          }
+        }
+      }
+    variables: '{"owner": "your-username", "repo": "oss-maintainer-copilot"}'
