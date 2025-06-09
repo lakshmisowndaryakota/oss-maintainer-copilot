@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { fetchRepoOverview } from '../github-api';
 import { Star, GitBranch, Eye, Code, Clock } from "lucide-react";
 import StatCard from '@/components/StatCard';
-import IssueTrendChart from '@/components/IssueTrendChart';
+import LabelChart from '@/components/LabelChart';
 
 export default function Home() {
   const [repo, setRepo] = useState<any>(null);
@@ -73,70 +73,37 @@ export default function Home() {
       </div>
     </div>
 
-    <div className="p-6">
-  <h2 className="text-2xl font-bold mb-4">📂 Issues Summary</h2>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-    
-    <StatCard title="🟢 Open Issues" value={repo.openIssues.totalCount} />
-    <StatCard title="🧊 Stale Issues" value={repo.staleIssuesMoreThan30.length} />
-    
-    <StatCard title="🤝 Good First Issues" value={repo.goodFirstIssues.totalCount} />
-    <StatCard title="🏷️ Labels Tracked" value={repo.labels.nodes.length} />
-    
-    
-  </div>
+    <div className="p-6"></div>
 
-  <div className="mt-8">
-    <h3 className="text-xl font-semibold mb-2">🆕 Recent Issues</h3>
-    <ul className="list-disc pl-5 text-sm space-y-2">
-      {repo.recentIssues?.nodes?.map((issue: any) => (
-        <li key={issue.number}>
-          <a href={issue.url} target="_blank" className="text-blue-600 underline">
-            #{issue.number} - {issue.title}
-          </a>{' '}
-          ({new Date(issue.createdAt).toLocaleDateString()})
-        </li>
-      ))}
-    </ul>
-  </div>
-
-  
-</div>
-
-
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">Open Issues</h2>
-          <p className="text-lg">{repo.openIssues.totalCount}</p>
-        </div>
+    <div className="bg-white shadow-xl rounded-2xl p-6">
+      <h2 className="text-2xl font-bold mb-4">📂 Issues Summary</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <StatCard title="🟢 Open Issues" value={repo.openIssues.totalCount} />
+      <StatCard title="🧊 Stale Issues" value={repo.staleIssuesMoreThan30.length} />
+      <StatCard title="🤝 Good First Issues" value={repo.goodFirstIssues.totalCount} />
+      <StatCard title="🏷️ Labels Tracked" value={repo.labels.nodes.length} />
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 p-4">
-        <div className="bg-white shadow rounded-xl p-4">
-          <h2 className="font-bold">good first issues</h2>
-          <p className="text-lg">{repo.goodFirstIssues.totalCount}</p>
-        </div>
-      </div>
-      <div className="bg-white shadow rounded-xl p-4">
-        <h2 className="font-bold">🏷️ Labels</h2>
-        <ul className="text-sm list-disc pl-4">
-          {repo.labels?.nodes?.map((label: any) => (
-            <li key={label.name}>{label.name}: {label.issues.totalCount} issues</li>
-          ))}
-        </ul>
-      </div>
-      <div className="bg-white shadow rounded-xl p-4">
-        <h2 className="font-bold">🆕 Recent Issues</h2>
-        <ul className="text-sm list-disc pl-4">
+
+      <div className="mt-8">
+        <h3 className="text-xl font-semibold mb-2">🆕 Recent Issues</h3>
+        <ul className="list-disc pl-5 text-sm space-y-2">
           {repo.recentIssues?.nodes?.map((issue: any) => (
             <li key={issue.number}>
-              <a href={issue.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+              <a href={issue.url} target="_blank" className="text-blue-600 underline">
                 #{issue.number} - {issue.title}
-              </a>
+              </a>{' '}
+              ({new Date(issue.createdAt).toLocaleDateString()})
             </li>
           ))}
         </ul>
       </div>
+    
+
+      <LabelChart data={repo.labelData} />
+    </div>
+
+    <div className="p-6"></div>
+    
       <div className="bg-white shadow rounded-xl p-4">
         <h2 className="font-bold">pull requests {repo.pullRequests?.totalCount}</h2>
         <ul className="text-sm list-disc pl-4">
