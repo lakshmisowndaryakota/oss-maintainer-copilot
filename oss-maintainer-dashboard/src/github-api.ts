@@ -71,6 +71,20 @@ export async function fetchRepoOverview(owner: string, repo: string) {
                 }
             }
         }
+        staleIssues: issues(states: OPEN, orderBy: { field: UPDATED_AT, direction: ASC }, first: 100) {
+        nodes {
+            title
+            number
+            url
+            createdAt
+            updatedAt
+            labels(first: 5) {
+                nodes {
+                    name
+                }
+            }
+          }
+        }
         pullRequests(first: 100, orderBy: {field: CREATED_AT, direction: DESC}) {
             totalCount
             nodes {
@@ -159,6 +173,16 @@ export async function fetchRepoOverview(owner: string, repo: string) {
 
   const topContributors = Object.values(contributorsMap).sort((a,b) => b.commits-a.commits).slice(0,5);
 
+  const staleIssues: any[] = json.data.repository.staleIssues.nodes;
+  const staleIssuesMoreThan30: any[] = [];
+  for(const node of staleIssues){
+    const updatedAt = new Date(node.updatedAt);
+    if(new Date().getTime()-updatedAt.getTime() > 30) 
+    {
+        staleIssuesMoreThan30.push(node);
+    }
+  }
+
   const repoData = {
     ...json.data.repository,
     openPRs,
@@ -166,7 +190,8 @@ export async function fetchRepoOverview(owner: string, repo: string) {
     recentPRs,
     mergedLast30Days,
     averageMergeTimeInDays,
-    topContributors
+    topContributors,
+    staleIssuesMoreThan30
   };
 
   console.log(repoData);
