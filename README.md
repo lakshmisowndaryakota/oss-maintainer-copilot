@@ -5,6 +5,7 @@ A beautiful and insightful dashboard for open-source maintainers to easily track
 <img width="1706" alt="image" src="https://github.com/user-attachments/assets/58918206-05d1-40f0-bbeb-d134cf8824be" />
 <img width="1709" alt="image" src="https://github.com/user-attachments/assets/2add370f-b668-4059-a043-87ffcfa4cfc0" />
 <img width="1702" alt="image" src="https://github.com/user-attachments/assets/4c33aa72-3c84-43ea-9a6e-cdcc98ae6438" />
+<img width="1704" alt="image" src="https://github.com/user-attachments/assets/fd358e16-40a5-4b37-a33a-43151a9a69f0" />
 
 ---
 
