@@ -197,7 +197,7 @@ export async function fetchRepoOverview(owner: string, repo: string) {
     averageMergeTimeInDays,
     topContributors,
     staleIssuesMoreThan30,
-    labelData
+    labelData,
   };
 
   console.log(repoData);

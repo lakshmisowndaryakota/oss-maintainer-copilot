@@ -108,29 +108,43 @@ export default function Home() {
 
       <div className="bg-white shadow-xl rounded-2xl p-6">
           <h2 className="text-2xl font-bold mb-4">📂 Pull Requests Summary</h2>
+          <p>Average time to merge a PR : {repo.averageMergeTimeInDays}</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <ListPRDetailsCard title="Total Pull Requests" value={repo.pullRequests} />
-          <ListPRDetailsCard title="Open Pull Requests" value={repo.openPRs} />
-          <ListPRDetailsCard title="Merged Pull Requests" value={repo.mergedPRs} />
-          <ListPRDetailsCard title="Recent Pull Requests" value={repo.recentPRs} />
-        </div>
+            <ListPRDetailsCard title="Total Pull Requests" value={repo.pullRequests} />
+            <ListPRDetailsCard title="Open Pull Requests" value={repo.openPRs} />
+            <ListPRDetailsCard title="Merged Pull Requests" value={repo.mergedPRs} />
+            <ListPRDetailsCard title="Recent Pull Requests" value={repo.recentPRs} />
+          </div>
       </div>
 
       <div className="p-6"></div>
-      
-      <div className="bg-white shadow rounded-xl p-4">
-        <h2 className="font-bold">top contributors</h2>
-        <ul className="text-sm list-disc pl-4">
-          {repo.topContributors?.map((c: any) => (
-            <li key={c.login} className="flex items-center space-x-2 mb-2">
-            <img src={c.avatarUrl} alt={c.login} className="w-6 h-6 rounded-full" />
-            <a href={c.url} target="_blank" rel="noreferrer">
-              {c.login} - {c.commits} commits
-            </a>
-          </li>
+
+      <div className="bg-white shadow rounded-xl p-6">
+        <h2 className="text-2xl font-bold mb-4">👥 Top Contributors</h2>
+        <ul className="divide-y divide-gray-200">
+          {repo.topContributors?.map((contributor: any) => (
+            <li key={contributor.login} className="flex items-center justify-between py-3">
+              <div className="flex items-center space-x-4">
+                <img
+                  src={contributor.avatarUrl}
+                  alt={contributor.login}
+                  className="w-10 h-10 rounded-full"
+                />
+                <a
+                  href={contributor.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-blue-600 hover:underline"
+                >
+                  {contributor.login}
+                </a>
+              </div>
+              <span className="text-sm text-gray-500">{contributor.commits} commits</span>
+            </li>
           ))}
         </ul>
       </div>
+
 
     </div>
     
