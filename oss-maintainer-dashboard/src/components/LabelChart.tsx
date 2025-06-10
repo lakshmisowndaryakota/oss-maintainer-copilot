@@ -5,8 +5,7 @@ const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#a4de6c', '#d0ed57'
 
 export default function LabelChart({ data }: { data: { name: string; count: number }[] }) {
   return (
-    <div className="bg-white shadow rounded-xl p-4">
-      <h2 className="font-bold mb-2">🧵 Issue Labels Distribution</h2>
+      <div><h2 className="text-xl font-semibold mb-2">🧵 Issue Labels Distribution</h2>
       <ResponsiveContainer width="100%" height={300}>
         <PieChart>
           <Pie
@@ -25,7 +24,6 @@ export default function LabelChart({ data }: { data: { name: string; count: numb
           <Tooltip />
           <Legend />
         </PieChart>
-      </ResponsiveContainer>
-    </div>
+      </ResponsiveContainer></div>
   );
 }
