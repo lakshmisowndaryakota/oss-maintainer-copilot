@@ -2,7 +2,9 @@
 
 A beautiful and insightful dashboard for open-source maintainers to easily track repository health, activity, and contributions.
 
-![Dashboard Screenshot](screenshot.png)
+<img width="1706" alt="image" src="https://github.com/user-attachments/assets/58918206-05d1-40f0-bbeb-d134cf8824be" />
+<img width="1709" alt="image" src="https://github.com/user-attachments/assets/2add370f-b668-4059-a043-87ffcfa4cfc0" />
+<img width="1702" alt="image" src="https://github.com/user-attachments/assets/4c33aa72-3c84-43ea-9a6e-cdcc98ae6438" />
 
 ---
 
