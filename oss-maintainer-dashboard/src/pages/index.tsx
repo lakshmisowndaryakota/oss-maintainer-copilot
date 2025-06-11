@@ -4,6 +4,7 @@ import { Star, GitBranch, Eye, Code, Clock } from "lucide-react";
 import StatCard from '@/components/StatCard';
 import LabelChart from '@/components/LabelChart';
 import ListPRDetailsCard from '@/components/ListPRDetailsCard';
+import TimelineItem from '@/components/TimeLineItem';
 
 export default function Home() {
   const [repo, setRepo] = useState<any>(null);
@@ -143,6 +144,13 @@ export default function Home() {
             </li>
           ))}
         </ul>
+      </div>
+
+      <div className="p-6"></div>
+
+      <div className="bg-white shadow rounded-xl p-6">
+      
+          
       </div>
 
 
