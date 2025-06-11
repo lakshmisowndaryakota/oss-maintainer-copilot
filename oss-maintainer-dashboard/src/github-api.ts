@@ -44,6 +44,20 @@ export async function fetchRepoOverview(owner: string, repo: string) {
         primaryLanguage {
           name
         }
+        issues: issues(first:100){
+            nodes {
+                title
+                number
+                createdAt
+                updatedAt
+                url
+                state
+                author{
+                    login
+                    url
+                }
+            }
+        }
         openIssues: issues(states: OPEN) {
           totalCount
         }
@@ -99,7 +113,11 @@ export async function fetchRepoOverview(owner: string, repo: string) {
             }
             state
             mergedAt
-            createdAt
+            updatedAt
+            author{
+                login
+                url
+              }
             }
         }
       }
@@ -188,6 +206,53 @@ export async function fetchRepoOverview(owner: string, repo: string) {
     count: label.issues.totalCount,
   }));
 
+  //type, title, url, user, updatedAt
+  const activityTimeLine:any[] = [];
+  //pull requests - open Pr, merged pr, pr closed
+  // issues - created, updated
+  const prs: any[] = json.data.repository.pullRequests.nodes;
+  for(const pr of prs){
+    let type:string = "";
+    if(pr.state == "OPEN"){
+        type = "Pull Request Opened"
+    } 
+    else if(pr.state == "MERGED"){
+        type = "Pull Request Merged"
+    }
+    else if(pr.state == "CLOSED"){
+        type = "Pull Request Closed"
+    }
+    const atNode = {
+        "type":type,
+        "title": pr.title,
+        "url": pr.url,
+        "user": pr.author.login,
+        "user-url": pr.author.url,
+        "updatedAt": pr.updatedAt
+    }
+    activityTimeLine.push(atNode);
+  }
+
+  const issues: any[] = json.data.repository.issues.nodes;
+  for(const issue of issues){
+    let type:string = "";
+    if(issue.state == "OPEN"){
+        type = "Pull Request Opened"
+    } 
+    else if(issue.state == "CLOSED"){
+        type = "Pull Request Closed"
+    }
+    const atNode = {
+        "type":type,
+        "title": issue.title,
+        "url": issue.url,
+        "user": issue.author.login,
+        "user-url": issue.author.url,
+        "updatedAt": issue.updatedAt
+    }
+    activityTimeLine.push(atNode);
+  }
+
   const repoData = {
     ...json.data.repository,
     openPRs,
@@ -198,6 +263,7 @@ export async function fetchRepoOverview(owner: string, repo: string) {
     topContributors,
     staleIssuesMoreThan30,
     labelData,
+    activityTimeLine
   };
 
   console.log(repoData);
