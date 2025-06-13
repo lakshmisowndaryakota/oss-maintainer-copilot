@@ -208,50 +208,66 @@ export async function fetchRepoOverview(owner: string, repo: string) {
 
   //type, title, url, user, updatedAt
   const activityTimeLine:any[] = [];
+
+  const oneDayAgo = new Date();
+  oneDayAgo.setDate(oneDayAgo.getDate() - 1);
+
   //pull requests - open Pr, merged pr, pr closed
   // issues - created, updated
   const prs: any[] = json.data.repository.pullRequests.nodes;
   for(const pr of prs){
-    let type:string = "";
-    if(pr.state == "OPEN"){
-        type = "Pull Request Opened"
-    } 
-    else if(pr.state == "MERGED"){
-        type = "Pull Request Merged"
+    const updatedAt = new Date(pr.updatedAt);
+
+    if (updatedAt >= oneDayAgo) {
+        let type:string = "";
+        if(pr.state == "OPEN"){
+            type = "Pull Request Opened"
+        } 
+        else if(pr.state == "MERGED"){
+            type = "Pull Request Merged"
+        }
+        else if(pr.state == "CLOSED"){
+            type = "Pull Request Closed"
+        }
+        const atNode = {
+            "type":type,
+            "title": pr.title,
+            "url": pr.url,
+            "user": pr.author.login,
+            "user-url": pr.author.url,
+            "updatedAt": pr.updatedAt
+        }
+        activityTimeLine.push(atNode);
     }
-    else if(pr.state == "CLOSED"){
-        type = "Pull Request Closed"
-    }
-    const atNode = {
-        "type":type,
-        "title": pr.title,
-        "url": pr.url,
-        "user": pr.author.login,
-        "user-url": pr.author.url,
-        "updatedAt": pr.updatedAt
-    }
-    activityTimeLine.push(atNode);
   }
 
   const issues: any[] = json.data.repository.issues.nodes;
   for(const issue of issues){
-    let type:string = "";
-    if(issue.state == "OPEN"){
-        type = "Pull Request Opened"
-    } 
-    else if(issue.state == "CLOSED"){
-        type = "Pull Request Closed"
+        const updatedAt = new Date(issue.updatedAt);
+
+        if (updatedAt >= oneDayAgo) {
+        let type:string = "";
+        if(issue.state == "OPEN"){
+            type = "Pull Request Opened"
+        } 
+        else if(issue.state == "CLOSED"){
+            type = "Pull Request Closed"
+        }
+        const atNode = {
+            "type":type,
+            "title": issue.title,
+            "url": issue.url,
+            "user": issue.author.login,
+            "user-url": issue.author.url,
+            "updatedAt": issue.updatedAt
+        }
+        activityTimeLine.push(atNode);
     }
-    const atNode = {
-        "type":type,
-        "title": issue.title,
-        "url": issue.url,
-        "user": issue.author.login,
-        "user-url": issue.author.url,
-        "updatedAt": issue.updatedAt
-    }
-    activityTimeLine.push(atNode);
   }
+
+// Sort by most recent activity
+activityTimeLine.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+
 
   const repoData = {
     ...json.data.repository,
