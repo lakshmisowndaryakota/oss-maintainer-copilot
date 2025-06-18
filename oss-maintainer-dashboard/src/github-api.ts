@@ -248,10 +248,10 @@ export async function fetchRepoOverview(owner: string, repo: string) {
         if (updatedAt >= oneDayAgo) {
         let type:string = "";
         if(issue.state == "OPEN"){
-            type = "Pull Request Opened"
+            type = "Issue Opened"
         } 
         else if(issue.state == "CLOSED"){
-            type = "Pull Request Closed"
+            type = "Issue Closed"
         }
         const atNode = {
             "type":type,

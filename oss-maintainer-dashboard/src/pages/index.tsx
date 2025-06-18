@@ -150,11 +150,22 @@ export default function Home() {
 
       <div className="bg-white shadow rounded-xl p-6">
         <h2 className="text-2xl font-bold mb-4">🕒 Activity Timeline</h2>
-        <div className="space-y-4">
-          {repo.activityTimeLine?.map((node: any, index: number) => (
-            <TimelineItem key={index} type={node.type} title={node.title} user={node.user} url={node.url} updatedAt={node.updatedAt}/>
-          ))}
-        </div>
+        {repo.activityTimeLine && repo.activityTimeLine.length > 0 ? (
+          <div className="space-y-4">
+            {repo.activityTimeLine?.map((node: any, index: number) => (
+              <TimelineItem
+                key={index}
+                type={node.type}
+                title={node.title}
+                user={node.user}
+                url={node.url}
+                updatedAt={node.updatedAt}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-500">No activities in the last day.</p>
+        )}
       </div>
     </div>
     
