@@ -8,17 +8,52 @@ import TimelineItem from '@/components/TimeLineItem';
 
 export default function Home() {
   const [repo, setRepo] = useState<any>(null);
-  const owner = 'lakshmisowndaryakota';
-  const repoName = 'oss-maintainer-copilot';
+  const [inputValue, setInputValue] = useState('lakshmisowndaryakota/oss-maintainer-copilot');
+  const [owner, setOwner] = useState('lakshmisowndaryakota');
+  const [repoName, setRepoName] = useState('oss-maintainer-copilot');
 
   useEffect(() => {
     fetchRepoOverview(owner, repoName).then(setRepo);
-  }, []);
+  }, [owner, repoName]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const [newOwner, newRepo] = inputValue.split('/');
+    if (newOwner && newRepo) {
+      setOwner(newOwner.trim());
+      setRepoName(newRepo.trim());
+    } else {
+      alert("Please enter a valid repo name in the format 'owner/repo'");
+    }
+  };
+
+  
 
   if (!repo) return <p>Loading...</p>;
 
   return (
+    
     <div style={{ padding: 20 }}>
+      <form onSubmit={handleSubmit} className="mb-6">
+        <label htmlFor="repoInput" className="block text-sm font-medium text-gray-700 mb-1">
+          Enter GitHub Repo (e.g., vercel/next.js):
+        </label>
+        <div className="flex gap-4">
+          <input
+            type="text"
+            id="repoInput"
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            className="border rounded px-4 py-2 w-full max-w-md"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Show Analytics
+          </button>
+        </div>
+      </form>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-white p-6 rounded-xl shadow mb-6">
         <h1 className="text-2xl font-bold text-gray-900">{repo.name}</h1>
         <p className="text-gray-600 text-sm md:text-base md:ml-6 mt-2 md:mt-0">{repo.description}</p>
